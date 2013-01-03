@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>org.mimacom.maven.parent</groupId>
+        <artifactId>mimacom-closed-parent</artifactId>
+        <version>1.0.4</version>
+    </parent>
+
+    <groupId>org.mimacom.fun.pizza</groupId>
+    <artifactId>pizza</artifactId>
+    <version>1.0.1-SNAPSHOT</version>
+
+    <properties>
+        <svn>http://repo.mimacom.ch/svn/codezoo</svn>
+    </properties>
+
+    <build>
+        <plugins>
+            <plugin>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>2.3.2</version>
+                <configuration>
+                    <source>1.6</source>
+                    <target>1.6</target>
+                </configuration>
+            </plugin>
+
+            <plugin>
+                <artifactId>maven-dependency-plugin</artifactId>
+                <version>2.3</version>
+                <executions>
+                    <execution>
+                        <id>espeak</id>
+                        <phase>prepare-package</phase>
+                        <goals>
+                            <goal>unpack-dependencies</goal>
+                        </goals>
+                        <configuration>
+                            <outputDirectory>${project.build.outputDirectory}/espeak</outputDirectory>
+                            <includeArtifactIds>espeak-win</includeArtifactIds>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>dependencies</id>
+                        <phase>prepare-package</phase>
+                        <goals>
+                            <goal>unpack-dependencies</goal>
+                        </goals>
+                        <configuration>
+                            <outputDirectory>${project.build.outputDirectory}</outputDirectory>
+                            <excludeArtifactIds>espeak-win</excludeArtifactIds>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+
+            <plugin>
+                <artifactId>maven-jar-plugin</artifactId>
+                <version>2.3.2</version>
+                <configuration>
+                    <archive>
+                        <manifest>
+                            <mainClass>org.mimacom.fun.pizza.PizzaFrame</mainClass>
+                        </manifest>
+                    </archive>
+                </configuration>
+            </plugin>
+
+            <plugin>
+                <artifactId>maven-release-plugin</artifactId>
+                <configuration>
+                    <checkModificationExcludes>
+                        <checkModificationExclude>workspace.xml</checkModificationExclude>
+                    </checkModificationExcludes>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+
+    <dependencies>
+        <dependency>
+            <groupId>net.sf.espeak</groupId>
+            <artifactId>espeak-win</artifactId>
+            <version>1.46.01</version>
+            <type>zip</type>
+        </dependency>
+
+        <dependency>
+            <groupId>org.tritonus</groupId>
+            <artifactId>tritonus-share</artifactId>
+            <version>0.3.6</version>
+        </dependency>
+        <dependency>
+            <groupId>org.tritonus</groupId>
+            <artifactId>tritonus-remaining</artifactId>
+            <version>0.3.6</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.kupal</groupId>
+            <artifactId>skypeCommand</artifactId>
+            <version>1.2</version>
+        </dependency>
+        <dependency>
+            <groupId>com.skype</groupId>
+            <artifactId>skype-lib</artifactId>
+            <version>1.0</version>
+        </dependency>
+    </dependencies>
+</project>
